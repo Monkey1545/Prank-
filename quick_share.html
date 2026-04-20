@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚗 YOU HAVE BEEN CHOSEN! 🚗</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        .box {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 5px solid #fff;
+            max-width: 600px;
+            text-align: center;
+            animation: popup 0.8s ease-out;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 2px 2px 0 #764ba2;
+            margin: 20px 0;
+        }
+        .car {
+            font-size: 5rem;
+            margin: 20px 0;
+            animation: spin 2s linear infinite;
+            display: inline-block;
+        }
+        button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            background: #fff;
+            color: #ff6b6b;
+            margin: 20px 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2rem;
+            animation: fall 3s linear forwards;
+        }
+        @keyframes popup {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes spin {
+            from { transform: rotateZ(0deg); }
+            to { transform: rotateZ(360deg); }
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh) rotateZ(360deg); opacity: 0; }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #FFD93D;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            border: 5px solid #FF6B6B;
+        }
+        svg {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🎉 LIZ! 🎉</h1>
+        <h1>YOU'VE BEEN CHOSEN!</h1>
+        <div class="car">🚗</div>
+        <h2 style="color: #fff; font-size: 2rem; text-shadow: 1px 1px 0 #764ba2;">FOR A BRAND NEW CAR!</h2>
+        <p style="font-size: 1.1rem; color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,0.2); margin: 20px 0;">
+            ⏰ LIMITED TIME ONLY! ⏰
+        </p>
+        <button onclick="celebrate()">CLAIM NOW!</button>
+        <button onclick="alert('You declined this AMAZING opportunity! 😢')">Hang Up</button>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <svg viewBox="0 0 500 600">
+                <rect width="500" height="600" fill="#FFD93D"/>
+                <rect y="0" width="500" height="60" fill="#FF6B6B"/>
+                <text x="250" y="45" font-size="48" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">⚠️ WARNING ⚠️</text>
+                <text x="250" y="120" font-size="44" font-weight="bold" fill="#FF6B6B" text-anchor="middle" font-family="Arial">YOUR WARRANTY</text>
+                <text x="250" y="170" font-size="44" font-weight="bold" fill="#FF6B6B" text-anchor="middle" font-family="Arial">IS EXPIRING!!!</text>
+                <text x="250" y="280" font-size="120" text-anchor="middle">🚗</text>
+                <text x="250" y="340" font-size="32" font-weight="bold" fill="#FF4757" text-anchor="middle" font-family="Arial">EXTENDED WARRANTY</text>
+                <text x="250" y="380" font-size="32" font-weight="bold" fill="#FF4757" text-anchor="middle" font-family="Arial">NEEDED NOW!</text>
+                <rect y="420" width="500" height="180" fill="#FF6B6B"/>
+                <text x="250" y="460" font-size="24" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">CLICK NOW TO</text>
+                <text x="250" y="500" font-size="24" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">PROTECT YOUR</text>
+                <text x="250" y="540" font-size="24" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">VEHICLE IMMEDIATELY!</text>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        function celebrate() {
+            createConfetti();
+            document.getElementById('modal').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('modal').classList.remove('active');
+            }, 5000);
+        }
+
+        function createConfetti() {
+            const emojis = ['🎉', '🎊', '⭐', '🚗', '💰', '🏆', '✨', '🎈'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.className = 'confetti';
+                    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    el.style.left = Math.random() * 100 + '%';
+                    el.style.top = '-10px';
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 3000);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
